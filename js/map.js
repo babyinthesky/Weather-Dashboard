@@ -1,5 +1,3 @@
-    // declares a global map variable
-
 var initializeMap=function() {
   this.map = new google.maps.Map(document.querySelector('#map'), this.mapOptions);
   this.locations=[];
