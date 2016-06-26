@@ -1,11 +1,11 @@
-var canvas=document.getElementById("canvas1");
-var ctx=canvas.getContext("2d");
-var canvas2=document.getElementById("canvas2");
-var ctx2=canvas2.getContext("2d");
-var canvas3=document.getElementById("canvas3");
-var ctx3=canvas3.getContext("2d");
-var canvas4=document.getElementById("canvas4");
-var ctx4=canvas4.getContext("2d");
+//var canvas=document.getElementById("canvas1");
+var ctx=document.getElementById("canvas1").getContext("2d");
+//var canvas2=document.getElementById("canvas2");
+var ctx2=document.getElementById("canvas2").getContext("2d");
+//var canvas3=document.getElementById("canvas3");
+var ctx3=document.getElementById("canvas3").getContext("2d");
+//var canvas4=document.getElementById("canvas4");
+var ctx4=document.getElementById("canvas4").getContext("2d");
 
 var loc={
   name:"Espoo,FI",
@@ -210,9 +210,9 @@ drawForecast.prototype.getUVI=function(today,numOfDay,lat,lon,max_uv){
   var year=today.getFullYear();;
   var month="";
   var date=today.getDate();
-  /*if(today.getMonth()<9)month="0"+(today.getMonth()+1);
-  else month=today.getMonth()+1;*/
-  today.getMonth()<9? month="0"+(today.getMonth()+1):month=today.getMonth()+1;
+  if(today.getMonth()<9)month="0"+(today.getMonth()+1);
+  else month=today.getMonth()+1;
+  //today.getMonth()<9? month="0"+(today.getMonth()+1):month=today.getMonth()+1;
 
   var levelColor=["rgba(170, 128, 255,0.5)","rgba(255, 51, 133,0.5)",
   "rgba(255, 153, 51,0.5)","rgba(255, 255, 51,0.5)","rgba(128, 255, 128,0.5)"];
@@ -310,8 +310,8 @@ drawForecast.prototype.updateForecaChart=function(loc){
     $("#img_weather").attr("src","images/"+mainWeather+".png");
     $("#show_loc").html(loc.name);
     $("#temperature").html(tempMin+"&ordmC~"+tempMax+"&ordmC");
-    }
-  );
+
+  });
 
   UVIData.labels=[];
   UVIData.datasets[0].data=[];
