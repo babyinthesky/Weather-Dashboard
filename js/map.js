@@ -13,11 +13,11 @@ var initializeMap=function() {
 }
 
 initializeMap.prototype.run=function(){
-
+  var map=this.map;
   this.locations = this.locationFinder();
   this.pinPoster(this.locations);
   $(window).resize(function() {
-    this.fitBounds();// Sets the boundaries of the map based on pin locations
+    map.fitBounds(window.mapBounds);// Sets the boundaries of the map based on pin locations
   });
 }
 
@@ -105,6 +105,6 @@ initializeMap.prototype.updateInfo=function(place){
   });
 }
 
-initializeMap.prototype.fitBounds=function(){
-  map.fitBounds(window.mapBounds);
+initializeMap.prototype.updateLocations=function(place){
+  this.locations.push(place);
 }

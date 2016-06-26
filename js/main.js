@@ -6,11 +6,13 @@ $(document).ready(function(){
 
     $("#submit").on('click',function(e){
       if($("#search1").val()!="")loc.name=$("#search1").val();
-      else loc.name="Espoo,FI"
+      else loc.name="Espoo,FI";
       $("#api_query").attr("href","http://api.openweathermap.org/data/2.5/forecast?q="+loc.name
       +"&appid=d94d33d922a61c31e19c03ef67d9f9f9&mode=JSON&units=metric");
+      mapView.updateLocations(loc.name);
       mapView.pinPoster([loc.name]);
       mapView.updateInfo(loc.name);
+      event.preventDefault();
     })
 
     $(".city_link").on('click',function(e){
@@ -58,6 +60,7 @@ $(document).ready(function(){
     $("#info_temperature").html(weatherData.list[index].main.temp+"&ordmC");
     $("#info_wind").html(weatherData.list[index].wind.speed+"m/s");
     $("#info_humidity").html(weatherData.list[index].main.humidity+"%");
+  });
 
-  })
+
 });
