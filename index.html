@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<header>
+  <meta charset="utf-8">
+  <title>Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/scroll.css">
+  <script src="js/jQuery.js"></script>
+  <script src="js/bootstrap.js"></script>
+  <script  src="js/Chart.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyA_fzGQsHorI7rhJTmEJ3PzOtn9RPNa_uM&libraries=places"
+   async defer></script>
+</header>
+
+<body>
+  <nav class="navbar navbar-default" style="margin-bottom:5px">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+         aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Weather</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">Home<span class="sr-only">(current)</span></a></li>
+          <!--<li><a href="#">Charts</a></li> -->
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              Cities<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a class="city_link" href="#" value="Espoo,FI">Espoo,Finland</a></li>
+              <li><a class="city_link" href="#" value="Beijing,CN">Beijing,China</a></li>
+              <li><a class="city_link" href="#" value="London,UK">London,UK</a></li>
+              <li><a class="city_link" href="#" value="Madrid,Spain">Madrid,Spain</a></li>
+            </ul>
+          </li>
+        </ul>
+        <form class="navbar-form navbar-left" role="search">
+          <div class="form-group">
+            <input id="search1" type="text" class="form-control" placeholder="Search"></input>
+          </div>
+          <button id="submit" type="submit" class="btn btn-default">OK</button>
+        </form>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a id="api_query" href="#">Open Weather API</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              Contacts <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="mailto:leishuang119@gmail.com">Email Me</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+
+  <div class="container" style="height:100%">
+   <div id="top_bar" class="row flex Top" style="height:25%" >
+        <div id="img_weather_box" class="col-md-2">
+          <img id="img_weather" width="150" height="150" src="images/" alt="Today's weather" >
+        </div>
+        <div class="col-md-3 text-right">
+          <!--<div class="row">
+              <select id="location">
+                <option value="Espoo,FI" selected>Espoo,FI</option>
+                <option value="Beijing,CN">Beijing,China</option>
+                <option value="Madrid,SP">Madrid,Spain</option>
+                <option value="London,UK">Lodon,UK</option>
+              </select>
+          </div> -->
+          <h3 id="show_loc" class="text-uppercase"></h3>
+          <h3 id="date"></h3>
+          <h3 id="temperature" style="color:#004d99"></h3>
+        </div>
+
+        <div class="col-md-6" style="height:100%">
+        <!--  <h1 class="text-uppercase">Dashboard</h1>
+          <h3>Shuang Lei</h3>-->
+        <div id="map"><h2>map here</h2></div>
+        </div>
+
+    </div>
+
+<!--    <div class="row">
+      <ul class="nav nav-tabs">
+        <li role="presentation" class="active"><a href="#canvas1" class="jumper">Forecast in 5 Days</a></li>
+        <li role="presentation"><a href="#canvas2" class="jumper">Wind Speed in 24H</a></li>
+        <li role="presentation"><a href="#canvas3" class="jumper">Humidity in 24H</a></li>
+        <li role="presentation"><a href="#canvas4" class="jumper">UV Index in one week</a></li>
+      </ul>
+    </div>
+
+    <hr/>-->
+    <div id="frame" class="row Frame" style="height:100%">
+     <div class="col-md-2 Left">
+
+        <div class="row">
+            <ul class="list-groups">
+              <li><a class="list-group-item jumper" href="#canvas1">Forecast in 5 Days</a></li>
+              <li><a class="list-group-item jumper" href='#canvas2'>Wind Speed in 24H</a></li>
+              <li><a class="list-group-item jumper" href='#canvas3'>Humidity in 24H</a></li>
+              <li><a class="list-group-item jumper" href='#canvas4'>UV Index in one week</a></li>
+            </ul>
+          </div>
+
+      </div>
+
+      <div id="chart_container" class="col-md-10 chart Middle" style="height:100%">
+
+        <div class="col-md-12">
+          <div class="panel add_frame thumbnail">
+            <div class="col-md-9">
+              <canvas id="canvas1" width="370" height="210"></canvas>
+            </div>
+            <div class="col-md-3" style="padding-left:0px">
+              <div class="thumbnail" style="margin-top:40px;">
+                <img id="info_img" src="images/weather.png" class="center-block" style="width:100px;height:100px"  alt="Weather from specific time">
+                <ul class="info-ul">
+                  <li class="flex info-li">
+                    <div class="col-md-3 info-li-div"><img src="images/clock.png" class="info-li-img"></div>
+                    <div id="info_time" class="col-md-9 info-li-div" style="font-size:24px;"></div>
+                  </li>
+                <li class="flex info-li">
+                  <div class="col-md-3 info-li-div"><img src="images/thermostat.png" class="info-li-img"></div>
+                  <strong><div id="info_temperature" class="col-md-9 info-li-div" style="font-size:30px;"></div></strong>
+                </li>
+                <li class="flex info-li">
+                  <div class="col-md-3 info-li-div"><img src="images/windlogo.png" class="info-li-img"></div>
+                  <div id="info_wind" class="col-md-9 info-li-div"  style="font-size:24px;"></div>
+                </li>
+                <li class="flex info-li">
+                  <div class="col-md-3 info-li-div"><img src="images/humidity.png" class="info-li-img"></div>
+                  <div id="info_humidity" class="col-md-9 info-li-div"  style="font-size:24px;"></div>
+                </li>
+              </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+          <div class="col-md-6" >
+            <canvas id="canvas2" class="add_frame thumbnail" height="300"></canvas>
+          </div>
+          <div class="col-md-6">
+            <canvas id="canvas3" class="add_frame thumbnail" height="300"></canvas>
+          </div>
+
+          <div class="col-md-12">
+            <div class="panel add_frame thumbnail">
+              <div class="col-md-10">
+                  <canvas id="canvas4" class="thumbnail"></canvas>
+                  <div class="flex">
+                    <div >Latitude :<input id="lat" type="text" style="width:100px"></div>
+                    <div >Longitude:<input id="lon" type="text" style="width:100px"></div>
+                    <button type="submit" class="btn btn-default">OK</button>
+                  </div>
+              </div>
+              <div class="col-md-2">
+                <div  class="flex">
+                  <div class="text-center level" style="background-color:rgb(170, 128, 255);">Extreme High</div>
+                  <div class="text-center level" style="background-color:rgb(255, 51, 133);">Very High</div>
+                  <div class="text-center level" style="background-color:orange;">High</div>
+                  <div class="text-center level" style="background-color:khaki;">Moderate</div>
+                  <div class="text-center level" style="background-color:lightgreen;">Low</div>
+                  <!--<canvas id="canvas5" class="thumbnail img-responsive" width="130" height="380"></canvas>-->
+                </div>
+              </div>
+            </div>
+          </div>
+
+<!--          <div class="col-md-8">
+            <canvas id="canvas6" class="thumbnail"></canvas>
+          </div>-->
+<!--          <div class="col-md-12" style="height:90%">
+              <div id="map"><h2>map here</h2></div>
+          </div>
+
+-->
+          <p>&nbsp;</p>
+          <hr/>
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <script  src="js/draw.js"></script>
+  <script  src="js/map.js"></script>
+  <script  src="js/main.js"></script>
+</body>
+
+</html>
